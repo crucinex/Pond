@@ -17,37 +17,71 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Primary,
+    onPrimary = DarkOnBackground,
+    primaryContainer = PrimaryDark,
+    onPrimaryContainer = SecondaryLight,
     secondary = Secondary,
-    background = Color(0xFF0F172A),
-    surface = Color(0xFF1E293B),
-    onPrimary = OnPrimary,
-    onSecondary = OnSecondary,
-    onBackground = Color(0xFFF1F5F9),
-    onSurface = Color(0xFFF1F5F9)
+    onSecondary = DarkBackground,
+    secondaryContainer = SecondaryVariant,
+    onSecondaryContainer = DarkOnBackground,
+    tertiary = AccentPurple,
+    onTertiary = DarkOnBackground,
+    error = Error,
+    onError = DarkOnBackground,
+    errorContainer = Error.copy(alpha = 0.2f),
+    onErrorContainer = Error,
+    background = DarkBackground,
+    onBackground = DarkOnBackground,
+    surface = DarkSurface,
+    onSurface = DarkOnSurface,
+    surfaceVariant = DarkSurfaceVariant,
+    onSurfaceVariant = DarkOnSurface.copy(alpha = 0.7f),
+    outline = Primary.copy(alpha = 0.3f),
+    outlineVariant = Primary.copy(alpha = 0.1f),
+    scrim = DarkBackground,
+    inverseSurface = DarkOnSurface,
+    inverseOnSurface = DarkSurface,
+    inversePrimary = PrimaryDark,
+    surfaceTint = Primary
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Primary,
+    onPrimary = LightOnBackground,
+    primaryContainer = PrimaryLight.copy(alpha = 0.2f),
+    onPrimaryContainer = PrimaryDark,
     secondary = Secondary,
-    background = Background,
-    surface = Surface,
-    onPrimary = OnPrimary,
-    onSecondary = OnSecondary,
-    onBackground = OnBackground,
-    onSurface = OnSurface
+    onSecondary = LightOnBackground,
+    secondaryContainer = SecondaryLight,
+    onSecondaryContainer = PrimaryDark,
+    tertiary = AccentPurple,
+    onTertiary = LightOnBackground,
+    error = Error,
+    onError = LightOnBackground,
+    errorContainer = Error.copy(alpha = 0.2f),
+    onErrorContainer = Error,
+    background = LightBackground,
+    onBackground = LightOnBackground,
+    surface = LightSurface,
+    onSurface = LightOnSurface,
+    surfaceVariant = LightSurfaceVariant,
+    onSurfaceVariant = LightOnSurface.copy(alpha = 0.7f),
+    outline = Primary.copy(alpha = 0.3f),
+    outlineVariant = Primary.copy(alpha = 0.1f),
+    scrim = DarkBackground,
+    inverseSurface = LightOnSurface,
+    inverseOnSurface = LightSurface,
+    inversePrimary = PrimaryLight,
+    surfaceTint = Primary
 )
 
 @Composable
 fun PondTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false, // Disable dynamic color for our custom theme
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
@@ -57,7 +91,9 @@ fun PondTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.background.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme
         }
     }
 
@@ -67,4 +103,3 @@ fun PondTheme(
         content = content
     )
 }
-

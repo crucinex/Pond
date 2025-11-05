@@ -80,14 +80,18 @@ app/
 
 - Android Studio Hedgehog (2023.1.1) or later
 - Android SDK 26 (Android 8.0) or higher
+- JDK 17 or later
 - Gradle 8.0 or higher
 
-### Building the App
+### Quick Setup
 
 1. Clone the repository
 2. Open the project in Android Studio
-3. Sync Gradle files
-4. Build and run on an emulator or device
+3. Sync Gradle files (first time may take 5-10 minutes)
+4. Set up an Android Virtual Device (AVD) or connect a physical device
+5. Build and run on an emulator or device
+
+📖 **For detailed setup instructions, see [DEVELOPER_SETUP.md](DEVELOPER_SETUP.md)**
 
 ### Permissions
 
